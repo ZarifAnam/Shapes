@@ -1,0 +1,150 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  width: 100%;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 100vh;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+}
+
+.shape-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+  min-width: 150px;
+}
+
+.shape-controls h3 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.shape-controls button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  background: #646cff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.25s;
+}
+
+.shape-controls button:hover {
+  background: #535bf2;
+}
+
+.shape-controls button.active {
+  background: #535bf2;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.input-group label {
+  color: #ccc;
+  font-size: 0.8rem;
+}
+
+.input-group input {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #555;
+  border-radius: 0.25rem;
+  background: #333;
+  color: white;
+  width: 80px;
+  text-align: center;
+}
+
+.canvas-container {
+  flex: 1;
+  border: 1px solid #444;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.info-panel {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-family: monospace;
+  font-size: 0.9rem;
+  min-width: 200px;
+  z-index: 100;
+}
+
+.info-panel h4 {
+  margin-bottom: 0.5rem;
+  color: #64ffda;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.info-item span:first-child {
+  color: #ccc;
+}
+
+.info-item span:last-child {
+  color: #fff;
+  font-weight: bold;
+}

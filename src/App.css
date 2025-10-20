@@ -1,0 +1,18 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 100vh;
+  padding: 1rem;
+}
+
+h1 {
+  color: #fff;
+  text-align: center;
+  margin: 0;
+  font-size: 2rem;
+  background: linear-gradient(45deg, #64ffda, #9d4edd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
