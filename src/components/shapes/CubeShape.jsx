@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react'
-import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
 const CubeShape = ({ size, onShapeSelect, position, highlightedProperty }) => {
@@ -13,13 +12,6 @@ const CubeShape = ({ size, onShapeSelect, position, highlightedProperty }) => {
       })
     }
   }, [size, onShapeSelect])
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += 0.005
-      meshRef.current.rotation.x += 0.003
-    }
-  })
 
   const handleClick = (event) => {
     event.stopPropagation()

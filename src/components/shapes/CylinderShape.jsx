@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react'
-import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
 const CylinderShape = ({ radius, height, onShapeSelect, position, highlightedProperty }) => {
@@ -16,12 +15,6 @@ const CylinderShape = ({ radius, height, onShapeSelect, position, highlightedPro
       })
     }
   }, [radius, height, onShapeSelect])
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += 0.005
-    }
-  })
 
   const handleClick = (event) => {
     event.stopPropagation()

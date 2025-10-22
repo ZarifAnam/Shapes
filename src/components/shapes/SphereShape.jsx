@@ -1,5 +1,4 @@
 import React, { useRef, useEffect } from 'react'
-import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
 const SphereShape = ({ radius, onShapeSelect, position, highlightedProperty }) => {
@@ -15,15 +14,6 @@ const SphereShape = ({ radius, onShapeSelect, position, highlightedProperty }) =
       })
     }
   }, [radius, onShapeSelect])
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += 0.005
-    }
-    if (equatorRef.current) {
-      equatorRef.current.rotation.z += 0.01
-    }
-  })
 
   const handleClick = (event) => {
     event.stopPropagation()
