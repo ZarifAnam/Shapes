@@ -34,6 +34,13 @@ function App() {
     setHighlightedProperty(propertyName)
   }
 
+  const handleParamsDrag = (shape, params) => {
+    setShapeParams(prev => ({
+      ...prev,
+      [shape]: { ...prev[shape], ...params }
+    }))
+  }
+
   return (
     <div className="app">
       <h1>3D Shapes Calculator</h1>
@@ -75,6 +82,7 @@ function App() {
                 shapeParams={shapeParams}
                 onShapeSelect={setSelectedShapeData}
                 highlightedProperty={highlightedProperty}
+                onParamsDrag={handleParamsDrag}
               />
               
               <Environment preset="sunset" />

@@ -1,19 +1,38 @@
 import React, { useRef, useState } from 'react'
-import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import CylinderShape from './shapes/CylinderShape'
 import CubeShape from './shapes/CubeShape'
 import PyramidShape from './shapes/PyramidShape'
 import SphereShape from './shapes/SphereShape'
 
-const Scene3D = ({ activeShape, shapeParams, onShapeSelect, highlightedProperty }) => {
+const Scene3D = ({ activeShape, shapeParams, onShapeSelect, highlightedProperty, onParamsDrag }) => {
   const groupRef = useRef()
+  const [isDragging, setIsDragging] = useState(false)
+  const [dragStartPos, setDragStartPos] = useState(null)
+  const [dragProperty, setDragProperty] = useState(null)
+
+  const handlePropertyDragStart = (property, event) => {
+    setIsDragging(true)
+    setDragProperty(property)
+    setDragStartPos({ x: event.clientX, y: event.clientY })
+    event.stopPropagation()
+  }
+
+  const handlePropertyDragEnd = () => {
+    setIsDragging(false)
+    setDragProperty(null)
+    setDragStartPos(null)
+  }
 
   const renderShape = () => {
     const commonProps = {
       onShapeSelect,
       position: [0, 0, 0],
       highlightedProperty,
+      onPropertyDragStart: handlePropertyDragStart,
+      onParamsDrag,
+      isDragging: isDragging && dragProperty,
+      dragProperty,
     }
 
     switch (activeShape) {
@@ -54,7 +73,11 @@ const Scene3D = ({ activeShape, shapeParams, onShapeSelect, highlightedProperty 
   }
 
   return (
-    <group ref={groupRef}>
+    <group 
+      ref={groupRef}
+      onPointerUp={handlePropertyDragEnd}
+      onPointerLeave={handlePropertyDragEnd}
+    >
       {renderShape()}
     </group>
   )
