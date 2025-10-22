@@ -138,6 +138,21 @@ body {
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.25rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.info-item:hover {
+  background: rgba(100, 255, 218, 0.1);
+  transform: translateX(3px);
+}
+
+.info-item.highlighted {
+  background: rgba(100, 255, 218, 0.2);
+  border-left: 3px solid #64ffda;
+  padding-left: calc(0.5rem - 3px);
+  box-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
 }
 
 .info-item span:first-child {

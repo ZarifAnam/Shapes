@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-const CubeShape = ({ size, onShapeSelect, position }) => {
+const CubeShape = ({ size, onShapeSelect, position, highlightedProperty }) => {
   const meshRef = useRef()
 
   useEffect(() => {
@@ -37,9 +37,11 @@ const CubeShape = ({ size, onShapeSelect, position }) => {
       <mesh ref={meshRef} onClick={handleClick} position={[0, 0, 0]}>
         <boxGeometry args={[size, size, size]} />
         <meshStandardMaterial 
-          color="#9d4edd" 
+          color={highlightedProperty === 'volume' ? '#ff00ff' : '#9d4edd'} 
           transparent 
-          opacity={0.8}
+          opacity={highlightedProperty === 'volume' ? 0.95 : 0.8}
+          emissive={highlightedProperty === 'volume' ? '#ff00ff' : '#000000'}
+          emissiveIntensity={highlightedProperty === 'volume' ? 0.4 : 0}
         />
       </mesh>
 
@@ -48,9 +50,9 @@ const CubeShape = ({ size, onShapeSelect, position }) => {
       <mesh position={[0, size / 2 + 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[size, size]} />
         <meshBasicMaterial 
-          color="#ff6b6b" 
+          color={highlightedProperty === 'faceArea' ? '#00ffff' : '#ff6b6b'} 
           transparent 
-          opacity={0.4}
+          opacity={highlightedProperty === 'faceArea' ? 0.8 : 0.4}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -59,9 +61,9 @@ const CubeShape = ({ size, onShapeSelect, position }) => {
       <mesh position={[0, 0, size / 2 + 0.01]}>
         <planeGeometry args={[size, size]} />
         <meshBasicMaterial 
-          color="#4fc3f7" 
+          color={highlightedProperty === 'faceArea' ? '#00ffff' : '#4fc3f7'} 
           transparent 
-          opacity={0.4}
+          opacity={highlightedProperty === 'faceArea' ? 0.8 : 0.4}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -77,7 +79,10 @@ const CubeShape = ({ size, onShapeSelect, position }) => {
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color="#ffeb3b" linewidth={3} />
+        <lineBasicMaterial 
+          color={highlightedProperty === 'edgeLength' ? '#ffd700' : '#ffeb3b'} 
+          linewidth={highlightedProperty === 'edgeLength' ? 5 : 3} 
+        />
       </line>
 
       {/* Height line */}
@@ -90,7 +95,10 @@ const CubeShape = ({ size, onShapeSelect, position }) => {
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color="#4caf50" linewidth={3} />
+        <lineBasicMaterial 
+          color={highlightedProperty === 'edgeLength' ? '#ffd700' : '#4caf50'} 
+          linewidth={highlightedProperty === 'edgeLength' ? 5 : 3} 
+        />
       </line>
 
       {/* Depth line */}
@@ -103,7 +111,10 @@ const CubeShape = ({ size, onShapeSelect, position }) => {
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color="#e91e63" linewidth={3} />
+        <lineBasicMaterial 
+          color={highlightedProperty === 'edgeLength' ? '#ffd700' : '#e91e63'} 
+          linewidth={highlightedProperty === 'edgeLength' ? 5 : 3} 
+        />
       </line>
 
       {/* Wireframe outline */}

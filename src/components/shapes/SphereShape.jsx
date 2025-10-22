@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-const SphereShape = ({ radius, onShapeSelect, position }) => {
+const SphereShape = ({ radius, onShapeSelect, position, highlightedProperty }) => {
   const meshRef = useRef()
   const radiusLineRef = useRef()
   const equatorRef = useRef()
@@ -41,9 +41,11 @@ const SphereShape = ({ radius, onShapeSelect, position }) => {
       <mesh ref={meshRef} onClick={handleClick} position={[0, 0, 0]}>
         <sphereGeometry args={[radius, 32, 32]} />
         <meshStandardMaterial 
-          color="#e74c3c" 
+          color={highlightedProperty === 'surfaceArea' || highlightedProperty === 'volume' ? '#ffd700' : '#e74c3c'} 
           transparent 
-          opacity={0.8}
+          opacity={highlightedProperty === 'surfaceArea' || highlightedProperty === 'volume' ? 0.95 : 0.8}
+          emissive={highlightedProperty === 'surfaceArea' || highlightedProperty === 'volume' ? '#ffd700' : '#000000'}
+          emissiveIntensity={highlightedProperty === 'surfaceArea' || highlightedProperty === 'volume' ? 0.4 : 0}
         />
       </mesh>
 
@@ -51,9 +53,9 @@ const SphereShape = ({ radius, onShapeSelect, position }) => {
       <mesh ref={equatorRef} position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
         <ringGeometry args={[radius - 0.02, radius + 0.02, 64]} />
         <meshBasicMaterial 
-          color="#ffeb3b" 
+          color={highlightedProperty === 'radius' || highlightedProperty === 'diameter' ? '#00ffff' : '#ffeb3b'} 
           transparent 
-          opacity={0.8}
+          opacity={highlightedProperty === 'radius' || highlightedProperty === 'diameter' ? 1 : 0.8}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -62,9 +64,9 @@ const SphereShape = ({ radius, onShapeSelect, position }) => {
       <mesh position={[0, 0, 0]}>
         <ringGeometry args={[radius - 0.02, radius + 0.02, 64]} />
         <meshBasicMaterial 
-          color="#4caf50" 
+          color={highlightedProperty === 'radius' || highlightedProperty === 'diameter' ? '#ff00ff' : '#4caf50'} 
           transparent 
-          opacity={0.8}
+          opacity={highlightedProperty === 'radius' || highlightedProperty === 'diameter' ? 1 : 0.8}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -79,7 +81,10 @@ const SphereShape = ({ radius, onShapeSelect, position }) => {
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color="#ffeb3b" linewidth={4} />
+        <lineBasicMaterial 
+          color={highlightedProperty === 'radius' ? '#00ffff' : '#ffeb3b'} 
+          linewidth={highlightedProperty === 'radius' ? 6 : 4} 
+        />
       </line>
 
       {/* Diameter line */}
@@ -92,7 +97,10 @@ const SphereShape = ({ radius, onShapeSelect, position }) => {
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color="#ff5722" linewidth={2} />
+        <lineBasicMaterial 
+          color={highlightedProperty === 'diameter' ? '#ff00ff' : '#ff5722'} 
+          linewidth={highlightedProperty === 'diameter' ? 4 : 2} 
+        />
       </line>
 
       {/* Vertical radius line */}
@@ -105,7 +113,10 @@ const SphereShape = ({ radius, onShapeSelect, position }) => {
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color="#2196f3" linewidth={4} />
+        <lineBasicMaterial 
+          color={highlightedProperty === 'radius' ? '#00ffff' : '#2196f3'} 
+          linewidth={highlightedProperty === 'radius' ? 6 : 4} 
+        />
       </line>
 
       {/* Wireframe outline */}

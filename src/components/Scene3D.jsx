@@ -6,13 +6,14 @@ import CubeShape from './shapes/CubeShape'
 import PyramidShape from './shapes/PyramidShape'
 import SphereShape from './shapes/SphereShape'
 
-const Scene3D = ({ activeShape, shapeParams, onShapeSelect }) => {
+const Scene3D = ({ activeShape, shapeParams, onShapeSelect, highlightedProperty }) => {
   const groupRef = useRef()
 
   const renderShape = () => {
     const commonProps = {
       onShapeSelect,
       position: [0, 0, 0],
+      highlightedProperty,
     }
 
     switch (activeShape) {

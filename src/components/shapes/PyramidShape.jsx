@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-const PyramidShape = ({ baseWidth, baseDepth, height, onShapeSelect, position }) => {
+const PyramidShape = ({ baseWidth, baseDepth, height, onShapeSelect, position, highlightedProperty }) => {
   const meshRef = useRef()
 
   useEffect(() => {
@@ -41,19 +41,21 @@ const PyramidShape = ({ baseWidth, baseDepth, height, onShapeSelect, position })
       {/* Main pyramid */}
       <mesh ref={meshRef} onClick={handleClick} position={[0, 0, 0]} geometry={pyramidGeometry}>
         <meshStandardMaterial 
-          color="#f39c12" 
+          color={highlightedProperty === 'lateralArea' || highlightedProperty === 'volume' ? '#ffd700' : '#f39c12'} 
           transparent 
-          opacity={0.8}
+          opacity={highlightedProperty === 'lateralArea' || highlightedProperty === 'volume' ? 0.95 : 0.8}
+          emissive={highlightedProperty === 'lateralArea' || highlightedProperty === 'volume' ? '#ffd700' : '#000000'}
+          emissiveIntensity={highlightedProperty === 'lateralArea' || highlightedProperty === 'volume' ? 0.4 : 0}
         />
       </mesh>
 
       {/* Base highlight */}
       <mesh position={[0, -height / 2 - 0.01, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[baseWidth, baseDepth]} />
+        <planeGeometry args={[Math.max(baseWidth, baseDepth), Math.max(baseWidth, baseDepth)]} />
         <meshBasicMaterial 
-          color="#ff6b6b" 
+          color={highlightedProperty === 'baseArea' || highlightedProperty === 'baseWidth' || highlightedProperty === 'baseDepth' ? '#00ffff' : '#ff6b6b'} 
           transparent 
-          opacity={0.6}
+          opacity={highlightedProperty === 'baseArea' || highlightedProperty === 'baseWidth' || highlightedProperty === 'baseDepth' ? 0.85 : 0.5}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -69,7 +71,10 @@ const PyramidShape = ({ baseWidth, baseDepth, height, onShapeSelect, position })
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color="#ffeb3b" linewidth={3} />
+        <lineBasicMaterial 
+          color={highlightedProperty === 'baseWidth' ? '#00ffff' : '#ffeb3b'} 
+          linewidth={highlightedProperty === 'baseWidth' ? 5 : 3} 
+        />
       </line>
 
       {/* Base depth */}
@@ -82,7 +87,10 @@ const PyramidShape = ({ baseWidth, baseDepth, height, onShapeSelect, position })
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color="#e91e63" linewidth={3} />
+        <lineBasicMaterial 
+          color={highlightedProperty === 'baseDepth' ? '#ff00ff' : '#e91e63'} 
+          linewidth={highlightedProperty === 'baseDepth' ? 5 : 3} 
+        />
       </line>
 
       {/* Height line */}
@@ -95,7 +103,10 @@ const PyramidShape = ({ baseWidth, baseDepth, height, onShapeSelect, position })
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color="#4caf50" linewidth={3} />
+        <lineBasicMaterial 
+          color={highlightedProperty === 'height' ? '#00ff00' : '#4caf50'} 
+          linewidth={highlightedProperty === 'height' ? 5 : 3} 
+        />
       </line>
 
       {/* Wireframe outline */}

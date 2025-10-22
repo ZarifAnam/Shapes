@@ -15,10 +15,12 @@ function App() {
     sphere: { radius: 1.5 }
   })
   const [selectedShapeData, setSelectedShapeData] = useState(null)
+  const [highlightedProperty, setHighlightedProperty] = useState(null)
 
   const handleShapeChange = (shape) => {
     setActiveShape(shape)
     setSelectedShapeData(null)
+    setHighlightedProperty(null)
   }
 
   const handleParamsChange = (shape, params) => {
@@ -26,6 +28,10 @@ function App() {
       ...prev,
       [shape]: { ...prev[shape], ...params }
     }))
+  }
+
+  const handlePropertyClick = (propertyName) => {
+    setHighlightedProperty(propertyName)
   }
 
   return (
@@ -74,6 +80,7 @@ function App() {
               activeShape={activeShape}
               shapeParams={shapeParams}
               onShapeSelect={setSelectedShapeData}
+              highlightedProperty={highlightedProperty}
             />
             
             <Environment preset="sunset" />
@@ -81,7 +88,11 @@ function App() {
         </Canvas>
         
         {selectedShapeData && (
-          <InfoPanel shapeData={selectedShapeData} />
+          <InfoPanel 
+            shapeData={selectedShapeData} 
+            onPropertyClick={handlePropertyClick}
+            highlightedProperty={highlightedProperty}
+          />
         )}
       </div>
     </div>

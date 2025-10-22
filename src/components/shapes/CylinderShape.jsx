@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-const CylinderShape = ({ radius, height, onShapeSelect, position }) => {
+const CylinderShape = ({ radius, height, onShapeSelect, position, highlightedProperty }) => {
   const meshRef = useRef()
   const radiusLineRef = useRef()
   const topCircleRef = useRef()
@@ -39,10 +39,12 @@ const CylinderShape = ({ radius, height, onShapeSelect, position }) => {
       <mesh ref={meshRef} onClick={handleClick} position={[0, 0, 0]}>
         <cylinderGeometry args={[radius, radius, height, 32]} />
         <meshStandardMaterial 
-          color="#64ffda" 
+          color={highlightedProperty === 'lateralArea' ? '#ffd700' : '#64ffda'} 
           transparent 
-          opacity={0.8}
+          opacity={highlightedProperty === 'lateralArea' ? 0.95 : 0.8}
           wireframe={false}
+          emissive={highlightedProperty === 'lateralArea' ? '#ffd700' : '#000000'}
+          emissiveIntensity={highlightedProperty === 'lateralArea' ? 0.5 : 0}
         />
       </mesh>
 
@@ -50,9 +52,9 @@ const CylinderShape = ({ radius, height, onShapeSelect, position }) => {
       <mesh ref={topCircleRef} position={[0, height / 2 + 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[radius, 32]} />
         <meshBasicMaterial 
-          color="#ff6b6b" 
+          color={highlightedProperty === 'baseArea' ? '#ff00ff' : highlightedProperty === 'radius' ? '#00ffff' : '#ff6b6b'} 
           transparent 
-          opacity={0.6}
+          opacity={highlightedProperty === 'baseArea' || highlightedProperty === 'radius' ? 0.9 : 0.6}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -61,9 +63,9 @@ const CylinderShape = ({ radius, height, onShapeSelect, position }) => {
       <mesh ref={bottomCircleRef} position={[0, -height / 2 - 0.01, 0]} rotation={[Math.PI / 2, 0, 0]}>
         <circleGeometry args={[radius, 32]} />
         <meshBasicMaterial 
-          color="#ff6b6b" 
+          color={highlightedProperty === 'baseArea' ? '#ff00ff' : highlightedProperty === 'radius' ? '#00ffff' : '#ff6b6b'} 
           transparent 
-          opacity={0.6}
+          opacity={highlightedProperty === 'baseArea' || highlightedProperty === 'radius' ? 0.9 : 0.6}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -78,7 +80,10 @@ const CylinderShape = ({ radius, height, onShapeSelect, position }) => {
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color="#ffeb3b" linewidth={3} />
+        <lineBasicMaterial 
+          color={highlightedProperty === 'radius' ? '#00ffff' : '#ffeb3b'} 
+          linewidth={highlightedProperty === 'radius' ? 5 : 3} 
+        />
       </line>
 
       {/* Height line */}
@@ -91,7 +96,10 @@ const CylinderShape = ({ radius, height, onShapeSelect, position }) => {
             itemSize={3}
           />
         </bufferGeometry>
-        <lineBasicMaterial color="#4caf50" linewidth={3} />
+        <lineBasicMaterial 
+          color={highlightedProperty === 'height' ? '#00ff00' : '#4caf50'} 
+          linewidth={highlightedProperty === 'height' ? 5 : 3} 
+        />
       </line>
 
       {/* Wireframe outline */}
