@@ -23,7 +23,8 @@ const CylinderShape = ({ radius, height, onShapeSelect, position }) => {
     }
   })
 
-  const handleClick = () => {
+  const handleClick = (event) => {
+    event.stopPropagation()
     if (onShapeSelect) {
       onShapeSelect({
         type: 'cylinder',

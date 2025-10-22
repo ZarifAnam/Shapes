@@ -7,43 +7,12 @@ import PyramidShape from './shapes/PyramidShape'
 import SphereShape from './shapes/SphereShape'
 
 const Scene3D = ({ activeShape, shapeParams, onShapeSelect }) => {
-  const [dragPosition, setDragPosition] = useState([0, 0, 0])
-  const [isDragging, setIsDragging] = useState(false)
   const groupRef = useRef()
-  const { size, viewport } = useThree()
-
-  const handlePointerDown = (event) => {
-    setIsDragging(true)
-    event.stopPropagation()
-  }
-
-  const handlePointerMove = (event) => {
-    if (isDragging) {
-      const x = (event.clientX / size.width) * 2 - 1
-      const y = -(event.clientY / size.height) * 2 + 1
-      
-      setDragPosition([
-        x * viewport.width / 2,
-        y * viewport.height / 2,
-        0
-      ])
-    }
-  }
-
-  const handlePointerUp = () => {
-    setIsDragging(false)
-  }
-
-  useFrame(() => {
-    if (groupRef.current) {
-      groupRef.current.position.lerp(new THREE.Vector3(...dragPosition), 0.1)
-    }
-  })
 
   const renderShape = () => {
     const commonProps = {
       onShapeSelect,
-      position: dragPosition,
+      position: [0, 0, 0],
     }
 
     switch (activeShape) {
@@ -84,12 +53,7 @@ const Scene3D = ({ activeShape, shapeParams, onShapeSelect }) => {
   }
 
   return (
-    <group 
-      ref={groupRef}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-    >
+    <group ref={groupRef}>
       {renderShape()}
     </group>
   )

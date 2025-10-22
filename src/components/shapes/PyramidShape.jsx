@@ -26,7 +26,8 @@ const PyramidShape = ({ baseWidth, baseDepth, height, onShapeSelect, position })
     return geometry
   }, [baseWidth, baseDepth, height])
 
-  const handleClick = () => {
+  const handleClick = (event) => {
+    event.stopPropagation()
     if (onShapeSelect) {
       onShapeSelect({
         type: 'pyramid',
