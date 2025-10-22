@@ -1,18 +1,41 @@
 .app {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
   height: 100vh;
-  padding: 1rem;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
 }
 
 h1 {
   color: #fff;
   text-align: center;
   margin: 0;
+  padding: 1rem;
   font-size: 2rem;
   background: linear-gradient(45deg, #64ffda, #9d4edd);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.main-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.canvas-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.right-panel {
+  width: 320px;
+  background: rgba(15, 23, 42, 0.95);
+  border-left: 2px solid rgba(100, 255, 218, 0.3);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }

@@ -1,7 +1,28 @@
 import React from 'react'
 
 const ShapeControls = ({ activeShape, shapeParams, onShapeChange, onParamsChange }) => {
-  const shapes = ['cylinder', 'cube', 'pyramid', 'sphere']
+  const shapes = [
+    { 
+      id: 'cylinder', 
+      name: 'Cylinder',
+      icon: '🛢️'
+    },
+    { 
+      id: 'cube', 
+      name: 'Cube',
+      icon: '📦'
+    },
+    { 
+      id: 'pyramid', 
+      name: 'Pyramid',
+      icon: '🔺'
+    },
+    { 
+      id: 'sphere', 
+      name: 'Sphere',
+      icon: '⚽'
+    }
+  ]
   
   const renderInputs = () => {
     const params = shapeParams[activeShape]
@@ -99,19 +120,26 @@ const ShapeControls = ({ activeShape, shapeParams, onShapeChange, onParamsChange
   }
 
   return (
-    <div className="controls">
-      {shapes.map(shape => (
-        <div key={shape} className="shape-controls">
-          <h3>{shape.charAt(0).toUpperCase() + shape.slice(1)}</h3>
+    <div className="controls-vertical">
+      <h3 className="controls-title">Select Shape</h3>
+      
+      <div className="shape-buttons">
+        {shapes.map(shape => (
           <button
-            className={activeShape === shape ? 'active' : ''}
-            onClick={() => onShapeChange(shape)}
+            key={shape.id}
+            className={`shape-button ${activeShape === shape.id ? 'active' : ''}`}
+            onClick={() => onShapeChange(shape.id)}
           >
-            Select
+            <span className="shape-icon">{shape.icon}</span>
+            <span className="shape-name">{shape.name}</span>
           </button>
-          {activeShape === shape && renderInputs()}
-        </div>
-      ))}
+        ))}
+      </div>
+
+      <div className="parameters-section">
+        <h3 className="parameters-title">Parameters</h3>
+        {renderInputs()}
+      </div>
     </div>
   )
 }
